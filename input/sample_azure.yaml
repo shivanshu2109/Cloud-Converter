@@ -1,0 +1,168 @@
+version: 1
+provider: azure
+resources:
+- type: Microsoft.Compute/virtualMachines
+  name: app-servers
+  location: eastus
+  sku:
+    name: Standard_A2_v2
+    tier: Standard
+    capacity: 2
+  properties:
+    hardwareProfile:
+      vmSize: Standard_A2_v2
+    storageProfile:
+      imageReference:
+        publisher: Canonical
+        offer: UbuntuServer
+        sku: 16.04-LTS
+        version: latest
+    osProfile:
+      computerNamePrefix: app-server
+      adminUsername: azureuser
+      linuxConfiguration:
+        disablePasswordAuthentication: true
+    networkProfile:
+      networkInterfaces:
+      - id: null
+- type: Microsoft.DBforPostgreSQL/servers
+  name: database-server
+  location: East US
+  sku:
+    name: GP_Gen5_4
+    tier: GeneralPurpose
+    capacity: 4
+    size: null
+    family: Gen5
+  properties:
+    version: '11'
+    administratorLogin: adminuser
+    administratorLoginPassword: password123!
+    storageMB: 102400
+    sslEnforcement: Enabled
+    createMode: Default
+    highAvailability:
+      mode: ZoneRedundant
+- type: Microsoft.Network/loadBalancers
+  name: load-balancer
+  location: eastus
+  sku:
+    name: Basic
+  properties:
+    loadBalancingRules:
+    - properties:
+        frontendIPConfiguration:
+          properties:
+            publicIPAddress:
+              properties: {}
+        backendAddressPool:
+          properties: {}
+        probe:
+          properties: {}
+        protocol: Tcp
+        frontendPort: 80
+        backendPort: 80
+        enableFloatingIP: false
+        idleTimeoutInMinutes: 4
+        loadDistribution: Default
+      name: lbr
+- type: Microsoft.Storage/storageAccounts
+  name: s3-bucket-storage
+  location: eastus
+  sku:
+    name: Standard_LRS
+  properties:
+    accessTier: Hot
+    supportsHttpsTrafficOnly: true
+    allowBlobPublicAccess: true
+- type: StorageAccount
+  name: s3dataxfer
+  location: eastus
+  sku:
+    name: Standard_LRS
+  properties:
+    accessTier: Hot
+    supportsHttpsTrafficOnly: true
+    isHnsEnabled: false
+    networkAcls:
+      bypass: Metrics,Logging
+      virtualNetworkRules: []
+      ipRules: []
+      defaultAction: Allow
+    trustedRootCertificate:
+      type: StorageAccountKey
+    allowBlobPublicAccess: false
+    allowSharedKeyAccess: true
+    minimumTlsVersion: TLS1_2
+    allowedCopyScope: PrivateLink
+    largeFileSharesState: Enabled
+    isNfsV3Enabled: false
+    resourceSharingAcls:
+      service:
+        resourceTypes: []
+        shareAcls: []
+    deleteRetentionPolicyEnabled: false
+    allowCrossTenantReplication: false
+    isLocalUserDisabled: false
+    isEphemeralBlobStorageEnabled: false
+- type: Microsoft.Storage/storageAccounts
+  name: s3requests
+  location: eastus
+  sku:
+    name: Standard_LRS
+  properties:
+    accessTier: Hot
+- type: Microsoft.Cdn/profiles
+  name: cdn-profile
+  location: eastus
+  sku:
+    name: Standard_Microsoft
+  properties:
+    trafficRoutingRules:
+    - name: rule
+      properties:
+        traffickingSource: Internet
+        transferUnit: GB
+        transferAmount: 100
+        direction: Outbound
+- type: Microsoft.Network/dnsZones
+  name: dns-zone
+  location: East US
+  sku:
+    name: Standard_DNS_Zone
+    tier: Standard
+  properties:
+    zoneType: Public
+  resources: []
+- type: Microsoft.Network/dnsZones
+  name: dns-queries
+  location: eastus
+  sku:
+    name: Standard
+  properties:
+    zoneType: Public
+    maxNumberOfRecordSets: 10000000
+- type: Microsoft.Network/virtualNetworks
+  name: vnet
+  location: eastus
+  sku:
+    name: Basic
+  properties:
+    addressSpace:
+      addressPrefixes:
+      - 10.0.0.0/16
+    subnets:
+    - name: default
+      properties:
+        addressPrefix: 10.0.0.0/24
+    enableVmProtection: false
+    enableDdosProtection: false
+    enableVirtualNetworkPeering: false
+- type: Microsoft.OperationalInsights/workspaces
+  name: cloudwatch-logs
+  location: eastus
+  sku:
+    name: PerGB2018
+  properties:
+    retentionInDays: 30
+    dailyQuotaGb: 100
