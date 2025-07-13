@@ -1,0 +1,127 @@
+{
+  "ee4a294765f47e499088cc07d1eda70354a50802503901aeda85380d2e5a2501": {
+    "id": "serverless-function",
+    "service": "Cloud Functions",
+    "resource_type": "Function",
+    "region": "us-west2",
+    "sku": "-",
+    "properties": {
+      "memory": "4096MB",
+      "timeout": "900s",
+      "runtime": "python3.12",
+      "architecture": "arm64"
+    }
+  },
+  "748dd16458362afed0582cc4481df8f012c452d6bc18bfe0cba4207c838b9f1a": {
+    "id": "object-storage",
+    "service": "Cloud Storage",
+    "resource_type": "Object Storage",
+    "region": "europe-west3",
+    "sku": "-",
+    "properties": {
+      "storage_class": "Intelligent Tiering",
+      "access_pattern": "dynamic",
+      "monitoring": "enabled"
+    }
+  },
+  "06f93a199dc6f0f760cc7426a7365b7d887ea7ce718ab9e09ed76c7be020a81c": {
+    "id": "database-table",
+    "service": "Cloud Bigtable",
+    "resource_type": "NoSQL Database Table",
+    "region": "asia-southeast1",
+    "sku": "-",
+    "properties": {
+      "storage_type": "HDD",
+      "replication_type": "MULTI_CLUSTER",
+      "encryption_type": "Google-managed",
+      "backup_type": "Backup to GCS"
+    }
+  },
+  "76a6906bd9607109351de42c1ddb8c00482ca513dad91a5f78a24b40edee94ec": {
+    "id": "api-gateway",
+    "service": "Cloud Endpoints",
+    "resource_type": "HTTP API",
+    "region": "us-east2",
+    "sku": "-",
+    "properties": {
+      "auth_method": "JWT",
+      "caching_level": "Regional",
+      "timeout": "29000ms"
+    }
+  },
+  "604faf2c4af6d06d87a456a014156feaa90371253f2b6194a64da3b45358c8e9": {
+    "id": "media-processing",
+    "service": "Transcoder",
+    "resource_type": "Video Transcoding",
+    "region": "northamerica-northeast1",
+    "sku": "-",
+    "properties": {
+      "resolution": "4k",
+      "codec": "HEVC",
+      "acceleration": "-"
+    }
+  },
+  "5304a0b2ba7af49676d50bec2674aa99575ff264d11f4cba1662a2d92aa7954e": {
+    "id": "ml-training-job",
+    "service": "AI Platform Training",
+    "resource_type": "Machine Learning Training Job",
+    "region": "us-east1",
+    "sku": "-",
+    "properties": {
+      "instance_type": "n1-standard-96",
+      "framework": "tensorflow",
+      "distributed_training": true
+    }
+  },
+  "c56a13ea45227f71c54fb00181801a41fd34b8fb403a87520ca1b3485b1094d7": {
+    "id": "container-orchestration",
+    "service": "Cloud Run",
+    "resource_type": "Serverless Containers",
+    "region": "europe-west1",
+    "sku": "-",
+    "properties": {
+      "cpu": 4,
+      "memory": "30GB",
+      "platform": "linux/arm64"
+    }
+  },
+  "728a9a0d7e60feb5e4e0d7a48edbf43f62db5d70a54d4a6aa40990529825638b": {
+    "id": "realtime-messaging",
+    "service": "Cloud IoT Core",
+    "resource_type": "Cloud Pub/Sub",
+    "region": "us-west1",
+    "sku": "messages",
+    "properties": {
+      "protocol": "MQTT5",
+      "persistence": "7d",
+      "max_message_size": "256KB"
+    }
+  },
+  "190185fa8977c727a7e274e87e2d646726f8e963101d3596bffd01754f2c97f9": {
+    "id": "threat-detection",
+    "service": "Cloud Security Command Center",
+    "resource_type": "Threat Detection",
+    "region": "global",
+    "sku": "-",
+    "properties": {
+      "data_sources": [
+        "audit_logs",
+        "dns_logs",
+        "network_logs"
+      ],
+      "data_retention": "90d"
+    }
+  },
+  "9947d6368d960c30c1930818dc2f2669cfd9cf075b793ccdb8b203eab907c42e": {
+    "id": "cache",
+    "service": "Cloud Memorystore",
+    "resource_type": "Redis Instance",
+    "region": "asia-northeast1",
+    "sku": "-",
+    "properties": {
+      "redis_version": "7",
+      "memory_size_gb": 150,
+      "backup_policy": "daily"
+    }
+  }
+}
