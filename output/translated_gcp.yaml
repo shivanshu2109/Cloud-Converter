@@ -1,0 +1,97 @@
+version: 1
+provider: gcp
+resources:
+- id: serverless-function
+  service: Cloud Functions
+  resource_type: Function
+  region: us-west2
+  sku: '-'
+  properties:
+    memory: 4096MB
+    timeout: 900s
+    runtime: python3.12
+    architecture: arm64
+- id: object-storage
+  service: Cloud Storage
+  resource_type: Object Storage
+  region: europe-west3
+  sku: '-'
+  properties:
+    storage_class: Intelligent Tiering
+    access_pattern: dynamic
+    monitoring: enabled
+- id: database-table
+  service: Cloud Bigtable
+  resource_type: NoSQL Database Table
+  region: asia-southeast1
+  sku: '-'
+  properties:
+    storage_type: HDD
+    replication_type: MULTI_CLUSTER
+    encryption_type: Google-managed
+    backup_type: Backup to GCS
+- id: api-gateway
+  service: Cloud Endpoints
+  resource_type: HTTP API
+  region: us-east2
+  sku: '-'
+  properties:
+    auth_method: JWT
+    caching_level: Regional
+    timeout: 29000ms
+- id: media-processing
+  service: Transcoder
+  resource_type: Video Transcoding
+  region: northamerica-northeast1
+  sku: '-'
+  properties:
+    resolution: 4k
+    codec: HEVC
+    acceleration: '-'
+- id: ml-training-job
+  service: AI Platform Training
+  resource_type: Machine Learning Training Job
+  region: us-east1
+  sku: '-'
+  properties:
+    instance_type: n1-standard-96
+    framework: tensorflow
+    distributed_training: true
+- id: container-orchestration
+  service: Cloud Run
+  resource_type: Serverless Containers
+  region: europe-west1
+  sku: '-'
+  properties:
+    cpu: 4
+    memory: 30GB
+    platform: linux/arm64
+- id: realtime-messaging
+  service: Cloud IoT Core
+  resource_type: Cloud Pub/Sub
+  region: us-west1
+  sku: messages
+  properties:
+    protocol: MQTT5
+    persistence: 7d
+    max_message_size: 256KB
+- id: threat-detection
+  service: Cloud Security Command Center
+  resource_type: Threat Detection
+  region: global
+  sku: '-'
+  properties:
+    data_sources:
+    - audit_logs
+    - dns_logs
+    - network_logs
+    data_retention: 90d
+- id: cache
+  service: Cloud Memorystore
+  resource_type: Redis Instance
+  region: asia-northeast1
+  sku: '-'
+  properties:
+    redis_version: '7'
+    memory_size_gb: 150
+    backup_policy: daily
