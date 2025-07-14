@@ -1,5 +1,0 @@
-python translator.py --source aws --target azure --input input/sample_aws.yaml --output output/translated_azure.yaml
-
-python translator.py --source azure --target aws --input output/translated_azure.yaml --output output/retranslated_aws.yaml
-
-python translator.py --source aws --target gcp --input input/sample_aws.yaml --output output/translated_gcp.yaml
