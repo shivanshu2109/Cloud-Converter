@@ -1,6 +1,0 @@
-openai
-pyyaml
-python-dotenv
-python-dotenv
-google-generativeai
-pyyaml
